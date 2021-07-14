@@ -47,7 +47,7 @@ On top of the vanilla Raspbian distribution, in the order of implementation.
 9. Fail2Ban intrusion prevention for SSH
 10. Landline on a softphone client on laptop/smartphone (also works over VPN connection)
 11. Pruned unused services and network configuraiton
-12. Building and running a 64-bit kernel definitely improves routing performance (from 100% to 50% ksoftirq thread CPU use at 250 Mb/s client download)
+12. Built and run 64-bit kernel. Definitely improves routing performance (from 100% to 50% ksoftirq thread CPU use at 250 Mb/s client download), but breaks IPsec VPN.
 
 ## Things to solve
 
@@ -59,6 +59,7 @@ On top of the vanilla Raspbian distribution, in the order of implementation.
 - DONE prevent allocation of auto private IPv4 and IPv6 addresses to stub interfaces -> cleaner routing table
 - MAYBE enable IPv6 networking (does not bring a lot currently)
 - make managed switch get (or have) IP address in LAN subnet
+- fix VPN server uner 64-bit kernel (charon: 08[KNL] allocating SPI failed: Operation not supported (95))
 
 ### Security
 - dnsmasq opens port 53 on the WAN side (but not listens to it) - seems it has to stay like this 
