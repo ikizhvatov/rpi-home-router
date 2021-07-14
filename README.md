@@ -46,7 +46,7 @@ On top of the vanilla Raspbian distribution:
 - simpify network setup:
   - kick out resolvconf.conf
   - do all setup via systemd-netowrkd; remaining challenge - ppp link setup
-- DONE prevent allocation of auto private IPv4 and IPv6 addresses to stub interfaces
+- DONE prevent allocation of auto private IPv4 and IPv6 addresses to stub interfaces -> cleaner routing table
 - MAYBE enable IPv6 networking (does not bring a lot currently)
 - make managed switch get (or have) IP address in LAN subnet
 
