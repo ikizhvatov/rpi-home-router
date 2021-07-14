@@ -8,6 +8,8 @@ The router from my previous ISP was too expensive to keep, the one I wanted to h
 
 I then extended it with a managed switch to have wired LAN, and configured a nubmer of software features.
 
+I decided to stick to vanilla Raspbian, as OpenWRT for RPi seemed to be not yet stable.
+
 ## Current state
 
 ### Internet access performance
