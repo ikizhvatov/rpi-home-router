@@ -4,7 +4,9 @@ This repo describes how to set up RPi 4 as a wireless and wired home router. In 
 
 ## Why
 
-The router from my previous ISP was too expensive to keep, the one I wanted to have was not yet on sale, and I had a Pi 4 lying around. It appeared to be fast and very stable. So I decided to stay with it. I then extended it with a managed switch to have wired LAN.
+The router from my previous ISP was too expensive to keep, the one I wanted to have was not yet on sale, and I had a Pi 4 lying around.The quick basic setup appeared to be fast and very stable. So I decided to stay with it.
+
+I then extended it with a managed switch to have wired LAN, and configured a nubmer of software features.
 
 ## Current state
 
@@ -55,7 +57,7 @@ On top of the vanilla Raspbian distribution:
 - tighten down iptables rules to drop all but necessary stuff from WAN
 
 ### WLAN 
-- Low 802.11ac throughput on Macbook Air 2017: only about 50Mb/s which is far below the SDIO 100 Mb/s limit. iOS and Win10 fine, reach 80 Mb/s.
+- Low 802.11ac throughput on Macbook Air 2017: only about 50/50 Mb/s which is far below the SDIO 100 Mb/s limit. iOS and Win10 fine, reaching the limit of 90/60 Mb/s.
 - WPA3 (SAE) or WPA2-PMF do not work for iOS and mac OS clients. They work for Win10, but throughput becomes somewhat slower compared to WPA2.
 
 ### Telephony
