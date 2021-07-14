@@ -14,7 +14,7 @@ The connection is throtteld by the ISP to 275/60 Mb/s (down/up).
 
 - 265/60 Mb/s directly from the RPi
 - 260/60 Mb/s for the clients connected over ethernert
-- 80/55 Mb/s for 5GHz WiFi clients (there is a 100 Mb/s limit of the RPi 4 SDIO interface)
+- 90/60 Mb/s for 5GHz WiFi clients (there is a 100 Mb/s limit of the RPi 4 SDIO interface)
 
 ### Availability
 - working for months without a reboot
@@ -37,6 +37,7 @@ On top of the vanilla Raspbian distribution:
 9. Fail2Ban intrusion prevention for SSH
 10. Landline on a softphone client on laptop/smartphone (also works over VPN connection)
 11. Pruned unused services and network configuraiton
+12. Building and running a 64-bit kernel definitely improves routing performance (from 100% to 50% ksoftirq thread CPU use at 250 Mb/s client download)
 
 ## Things to solve
 
@@ -56,9 +57,6 @@ On top of the vanilla Raspbian distribution:
 ### WLAN 
 - Low 802.11ac throughput on Macbook Air 2017: only about 50Mb/s which is far below the SDIO 100 Mb/s limit. iOS and Win10 fine, reach 80 Mb/s.
 - WPA3 (SAE) or WPA2-PMF do not work for iOS and mac OS clients. They work for Win10, but throughput becomes somewhat slower compared to WPA2.
-
-### System
-- does a 64-bit kernel improve performance?
 
 ### Telephony
 - softphone directly on RPi, or find a softpone iOS/Android app that keeps online status while in background (Linphone does not)
