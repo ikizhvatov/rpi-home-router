@@ -1,19 +1,20 @@
-# rpi-home-router
-Setting up a Raspberry Pi 4 based home router
+# Raspberry Pi 4 based home router
+
+This repo describes how to set up RPi 4 as a wireless and wired home router. In my case it works with a fiber optic line from Deutsche Telekom.
+
+## Why
+
+The router from my previous ISP was too expensive to keep, the one I wanted to have was not yet on sale, and I had a Pi 4 lying around. It appeared to be fast and very stable. So I decided to stay with it. I then extended it with a managed switch to have wired LAN.
 
 ## Current state
 
 ### Internet access performance
 
-#### over wired network
-- 265/60 Mb/s directly from RPI (hitting the line limit) 
-- 220/60 Mb/s throughput from devices connected over Ethernet
-- the cap set by the ISP is 275/60 Mb/s
+The connection is throtteld by the ISP to 275/60 Mb/s (down/up).
 
-#### over 5 GHz WiFi
-- 70-80 Mb/s iOS and Win10 clients
-- 40-50 Mb/s mac OS
-- the cap induced by the RPi 4 SDIO interface is 100 Mb/s
+- 265/60 Mb/s directly from the RPi
+- 260/60 Mb/s for the clients connected over ethernert
+- 80/55 Mb/s for 5GHz WiFi clients (there is a 100 Mb/s limit of the RPi 4 SDIO interface)
 
 ### Availability
 - working for months without a reboot
@@ -21,40 +22,43 @@ Setting up a Raspberry Pi 4 based home router
 ### Security
 - SSH with public key only login for external access
 - IKEv2 VPN
-- no restrictive firewall
+- no restrictive firewall yet
 
 ## Things done
+On top of the vanilla Raspbian distribution:
 1. Public key only SSH login
-2. PPPOE connection to Telekom ISP (over fiber)
+2. PPPOE connection to Telekom ISP
 3. Routed AP
 4. Resolved TCP MSS issue over PPPOE (clients could not open some web pages, in particular duckduckgo.com)
-5. Adequate throughput for 802.11ac and 802.11n
+5. Adequate 5 GHz and 2.4 GHz WiFi throughput
 6. Wired LAN via managed switch with VLANs (bridge with WLAN)
-7. Selfhost.de DynDNS automatic updating
+7. Selfhost.de DynDNS with automatic updating (upon ppp link establishment and periodically)
 8. IKEv2 VPN server for roadwarrior scenario
 9. Fail2Ban intrusion prevention for SSH
 10. Landline on a softphone client on laptop/smartphone (also works over VPN connection)
+11. Pruned unused services and network configuraiton
 
 ## Things to solve
 
 ### Network basic
-- not more that 220 Mb/s routing performance over Ethernet. Reason: ksoftirqd kernel thread maxes out one CPU core. A kernel regression or a feature?
-- configuration now a mix of /etc/network/interfaces and /etc/systemd/network/ scripts. Because bridge does not work when set up in /network/interfaces. Stick to one.
-- routing table: pppoe default route setting - both with replace and witout replace have potential issues
-- prevent allocation of auto private IPv4 addresses to stub interfaces
-- enable IPv6 networking
+- sometimes not more that 220 Mb/s routing performance over Ethernet. Reason: ksoftirqd kernel thread maxes out one CPU core. A kernel regression or a feature?
+- simpify network setup:
+  - kick out resolvconf.conf
+  - do all setup via systemd-netowrkd; remaining challenge - ppp link setup
+- DONE prevent allocation of auto private IPv4 and IPv6 addresses to stub interfaces
+- MAYBE enable IPv6 networking (does not bring a lot currently)
 - make managed switch get (or have) IP address in LAN subnet
 
 ### Security
-- dnsmasq listens and responds not only in LAN also on the WAN side
-- limit exposure on WAN side by tighten down iptables rules
-
-### Network extra
-- run selfhost.de DynDNS updater script on pppoe  link set up and re-establishment
+- dnsmasq opens port 53 on the WAN side (but not listens to it) - seems it has to stay like this 
+- tighten down iptables rules to drop all but necessary stuff from WAN
 
 ### WLAN 
-- Low 802.11ac throughput on Macbook Air 2017. About 50Mb/s which is far below the SDIO 100 Mb/s limit. iOS and Win10 fine, reach 70-80 Mb/s.
-- WPA3 (SAE) or WPA2-PMF do not work with iOS and mac OS. They works with Win10, though throughput becomes noticeably slower compared to WPA2.
+- Low 802.11ac throughput on Macbook Air 2017: only about 50Mb/s which is far below the SDIO 100 Mb/s limit. iOS and Win10 fine, reach 80 Mb/s.
+- WPA3 (SAE) or WPA2-PMF do not work for iOS and mac OS clients. They work for Win10, but throughput becomes somewhat slower compared to WPA2.
+
+### System
+- does a 64-bit kernel improve performance?
 
 ### Telephony
-- softphone directly on RPi, or find a softpone iOS/Android app that keeps online status while in background (linphone does not)
+- softphone directly on RPi, or find a softpone iOS/Android app that keeps online status while in background (Linphone does not)
